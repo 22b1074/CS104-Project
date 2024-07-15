@@ -1,0 +1,45 @@
+/* Apply styles to the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Set background color for the body */
+    text-align: center; /* Center align text within the body */
+    justify-content: center; /* Center align content horizontally */
+    align-items: center; /* Center align content vertically */
+    height: 100vh; /* Set full height of viewport */
+    margin: 0; /* Remove default margin */
+}
+
+/* Apply styles to the heading */
+h2 {
+    margin-top: 20px; /* Add margin above the heading */
+}
+
+/* Apply styles to the profile links container */
+#profileLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Add margin above the links container */
+    width: 300px;
+    text-align: center;
+}
+
+/* Apply styles to each link */
+#profileLinks a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px; /* Add margin below each link */
+    background-color: #007bff; /* Set background color for links */
+    color: #ffffff; /* Set text color for links */
+    font-size: 18px; /* Set font size for links */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 5px; /* Add rounded corners to links */
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    text-align: center; /* Center align text within links */
+}
+
+/* Hover effect for links */
+#profileLinks a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

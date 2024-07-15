@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Profiles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Music Profiles</h2>
+    <div id="profileContainer"></div>
+
+    <script>
+        // Function to fetch and display music profiles
+        async function fetchMusicProfiles() {
+            try {
+                const response = await fetch('/profiles');
+                const profileData = await response.json();
+
+                // Filter profiles based on the "Music" interest
+                const musicProfiles = profileData.filter(profile => {
+                    return profile.Interests.includes('Music');
+                });
+
+                // Display the filtered profiles
+                displayProfiles(musicProfiles);
+            } catch (error) {
+                console.error('Error fetching music profiles:', error);
+            }
+        }
+
+        // Function to display profiles on the webpage
+        function displayProfiles(profileData) {
+            const profileContainer = document.getElementById('profileContainer');
+
+            // Clear any existing profiles
+            profileContainer.innerHTML = '';
+
+            // Loop through each profile and create HTML elements to display profile details
+            profileData.forEach(profile => {
+                const profileElement = document.createElement('div');
+                profileElement.classList.add('profile');
+
+                // Construct HTML content for each profile
+                const profileHTML = `
+                    <img src="${profile.Photo}" alt="${profile.Name}">
+                    <div class="profile-info">
+                        <p><strong>Name:</strong> ${profile.Name}</p>
+                        <p><strong>IITB Roll Number:</strong> ${profile['IITB Roll Number']}</p>
+                        <p><strong>Year of Study:</strong> ${profile['Year of Study']}</p>
+                        <p><strong>Age:</strong> ${profile.Age}</p>
+                        <p><strong>Gender:</strong> ${profile.Gender}</p>
+                        <p><strong>Interests:</strong> ${profile.Interests.join(', ')}</p>
+                        <p><strong>Hobbies:</strong> ${profile.Hobbies.join(', ')}</p>
+                        <p><strong>Email:</strong> ${profile.Email}</p>
+                    </div>
+                `;
+
+                // Set the HTML content of the profile element
+                profileElement.innerHTML = profileHTML;
+
+                // Append the profile element to the profile container
+                profileContainer.appendChild(profileElement);
+            });
+        }
+
+        // Call fetchMusicProfiles function when the page loads
+        fetchMusicProfiles();
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Female Match</title>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <h2>Best Match</h2>
+    <div id="bestMatchContainer"></div>
+
+    <script>
+        const scores = {
+            'Technology': 15,
+            'Art': 13,
+            'Literature': 11,
+            'Sports': 9,
+            'Fashion': 7,
+            'Music': 5,
+            'Movies': 3,
+            'Traveling': 1,
+            'Coding': 8,
+            'Painting': 7,
+            'Gardening': 6,
+            'Photography': 5,
+            'Reading': 4,
+            'Cooking': 3,
+            'Playing musical instruments': 2,
+            'Watching YouTube/Instagram': 1
+        };
+
+        // Fetch user details from localStorage
+        const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const userInterests = userDetails.interests || [];
+        const userHobbies = userDetails.hobbies || [];
+
+        // Function to fetch female profiles and find the best match
+        async function findBestMatch() {
+            try {
+                const response = await fetch('/profiles');
+                const profiles = await response.json();
+                const maleProfiles = profiles.filter(profile => profile.Gender === 'Male');
+
+                let bestMatch = null;
+                let highestScore = 0;
+
+                maleProfiles.forEach(profile => {
+                    const commonInterests = profile.Interests.filter(interest => userInterests.includes(interest));
+                    const commonHobbies = profile.Hobbies.filter(hobby => userHobbies.includes(hobby));
+                    
+                    const compatibilityScore = commonInterests.reduce((sum, interest) => sum + (scores[interest] || 0), 0) +
+                                              commonHobbies.reduce((sum, hobby) => sum + (scores[hobby] || 0), 0);
+
+                    if (compatibilityScore > highestScore) {
+                        highestScore = compatibilityScore;
+                        bestMatch = profile;
+                    }
+                });
+
+                displayBestMatch(bestMatch);
+            } catch (error) {
+                console.error('Error fetching profiles:', error);
+            }
+        }
+
+        // Function to display the best match
+        function displayBestMatch(profile) {
+            const bestMatchContainer = document.getElementById('bestMatchContainer');
+
+            if (profile) {
+                const profileHTML = `
+                    <div class="profile">
+                        <img src="${profile.Photo}" alt="${profile.Name}">
+                        <div class="profile-info">
+                            <p><strong>Name:</strong> ${profile.Name}</p>
+                            <p><strong>IITB Roll Number:</strong> ${profile['IITB Roll Number']}</p>
+                            <p><strong>Year of Study:</strong> ${profile['Year of Study']}</p>
+                            <p><strong>Age:</strong> ${profile.Age}</p>
+                            <p><strong>Gender:</strong> ${profile.Gender}</p>
+                            <p><strong>Interests:</strong> ${profile.Interests.join(', ')}</p>
+                            <p><strong>Hobbies:</strong> ${profile.Hobbies.join(', ')}</p>
+                            <p><strong>Email:</strong> ${profile.Email}</p>
+                        </div>
+                    </div>
+                `;
+
+                bestMatchContainer.innerHTML = profileHTML;
+            } else {
+                bestMatchContainer.innerHTML = '<p>No match found.</p>';
+            }
+        }
+
+        // Call findBestMatch function when the page loads
+        findBestMatch();
+    </script>
+</body>
+</html>

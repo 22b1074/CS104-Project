@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CS104 Dating Website Login Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Center align all content */
+        }
+
+        .login-container {
+            border: 1px solid #ccc;
+            padding: 40px; /* Increase padding for more space inside the container */
+            border-radius: 8px;
+            width: 350px; /* Increase the width of the container */
+            height: auto; /* Allow the container height to adjust based on content */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block; /* Ensure it's a block level container */
+            align-items: center;
+        }
+
+        
+
+        .input-label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left; /* Align labels to the left */
+            font-size: 20px;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }   
+
+        
+        .login-button {
+            background-color: green;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+            display: block; /* Make the button a block-level element */
+            font-size: 20px;
+        }
+
+
+        .forgot-password {
+            color: rgb(38, 0, 255);
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+            width: 100%; /* Full width link */
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center; /* Center error message */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Welcome to CS104 Dating Website Login Form</h2>
+        <form id="loginForm">
+            <label for="username" class="input-label">Username:</label>
+            <input type="text" id="username" name="username" class="input-field" required><br><br>
+            
+            <label for="password" class="input-label" >Password:</label>
+            <input type="password" id="password" name="password" class="input-field" required><br><br>
+            
+            <button type="submit" class="login-button">Login</button>
+        </form>
+
+        <p><a href="forgot.html" class="forgot-password" >Forgot Password?</a></p>
+
+    <div id="errorMessage" class="error-message"></div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`/login?username=${username}&password=${password}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    window.location.href = 'dating.html'; // Redirect to dating.html on successful login
+                } else {
+                    document.getElementById('errorMessage').textContent = 'Invalid credentials';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').textContent = 'An error occurred';
+            }
+        });
+    </script>
+</body>
+</html>

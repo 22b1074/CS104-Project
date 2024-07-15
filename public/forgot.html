@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align container to the top vertically */
+            align-items: center; /* Center container horizontally */
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Add space at the top */
+        }
+
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        button.secondary {
+            background-color: green;
+        }
+        #secretQuestionContainer,
+        #passwordContainer {
+            display: none;
+        }
+
+        #secretQuestionContainer.show,
+        #passwordContainer.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+  <div id="conten-wrapper">
+   <div class="container">
+    <h2>Forgot Password</h2>
+    <form id="forgotForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <button type="submit">Submit</button>
+        <button class="secondary" onclick="window.location.href='login.html'">Go Back to Login</button>
+    </form>
+   </div>
+    <div id="secretQuestionContainer" style="display: none;">
+        <p id="secretQuestion"></p>
+        <label for="answer">Answer:</label>
+        <input type="text" id="answer" name="answer" required><br><br>
+        <button type="button" id="verifyAnswer">Verify Answer</button>
+        <button class="secondary" onclick="window.location.href='login.html'">Go Back to Login</button>
+    </div>
+
+    <div id="passwordContainer" style="display: none;">
+        <p id="password"></p>
+        <button class="secondary" onclick="window.location.href='login.html'">Go Back to Login</button>
+    </div>
+  </div>
+    <script>
+        document.getElementById('forgotForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+
+            try {
+                const response = await fetch(`/forgot?username=${username}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Invalid username. Please try again.');
+                } else {
+                    // Display secret question container
+                    document.getElementById('secretQuestion').textContent = data.secret_question;
+                    document.getElementById('secretQuestionContainer').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+
+        document.getElementById('verifyAnswer').addEventListener('click', async () => {
+            const username = document.getElementById('username').value;
+            const answer = document.getElementById('answer').value;
+
+            try {
+                const response = await fetch(`/verifyAnswer?username=${username}&answer=${answer}`);
+                const verifyData = await response.json();
+
+                if (verifyData.error) {
+                    alert('Invalid answer. Please try again.');
+                } else {
+                    // Display password container
+                    document.getElementById('password').textContent = `Your password is: ${verifyData.password}`;
+                    document.getElementById('passwordContainer').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>

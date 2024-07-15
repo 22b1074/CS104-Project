@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{graphicx}
+
+\begin{document}
+
+\section*{Looking for a Date?}
+
+\textbf{Basic Tasks:}
+
+\begin{enumerate}
+    \item \textbf{Login Page:} Asks for username and password. For registered users with correct entries, it redirects to the input interface. Includes login and Forgot Password buttons.
+    
+    \item \textbf{Forgot Password? Button:} It prompts for the username, then displays the corresponding secret question on the screen. Asks for the answer to the secret question (if the user is registered; otherwise, gives an error message). Includes buttons to verify the answer and go back to login. The verification button checks the answer and provides the password if correct, otherwise displays an error message.
+    
+    \item \textbf{Input Interface:} Requests users to fill specific details mentioned in the problem statement. Includes buttons for Find Match, Scroll through Profiles, and Logout.
+    
+    \item \textbf{Scrolling/Swiping:} Redirects from the input interface to a page for scrolling through profiles upon clicking the Scroll Through Profiles button.
+    
+    \item \textbf{Finding the "Right Match":} Matches users with their "right match" among profiles present in students.json using a compatibility score based on gender, common interests, and hobbies.
+\end{enumerate}
+
+\textbf{Customizations:}
+
+\begin{enumerate}
+    \item The scroll_or_swipe.html page has links for All profiles, Male, Female, Other Gender, and various interest categories (Technology, Art, Literature, Sports, Fashion, Music, Movies, Traveling). Clicking gender links displays profiles of that particular gender, while interest links show profiles with corresponding interests.
+    
+    \item The "right match" is determined by a compatibility score. For male users, the match is found among only females in students.json based on common interests and hobbies. The female profile with the highest compatibility score is chosen.If two persons have same highest compatibility score then the first one with that score is chosen as "right match" for user.  Similar methods apply to female users.
+\end{enumerate}
+
+\textbf{Extra Files:}
+
+\begin{enumerate}
+    \item all\_profiles.html: Displays all profiles.
+    \item <interests>.html: Files for specific interest links.
+    \item <gender>.html: Files for specific gender links.
+    \item female_match.html: For displaying the right match of male users.
+    \item male_match.html: For displaying the right match of female users.
+    \item other.js: Script for displaying the right match of other gender users.
+    \item styles1.css, styles2.css, style3.css: Styling sheets.
+    \item server.js: Implementation server file.
+\end{enumerate}
+
+\textbf{Implementation:}
+
+\begin{enumerate}
+    \item Open terminal in the CS104 Project directory and run \texttt{node server.js}.
+    \item Go to \url{http://localhost:3000/login.html} in a web browser to access the application.
+\end{enumerate}
+
+\end{document}
+

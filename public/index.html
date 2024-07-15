@@ -1,0 +1,38 @@
+<!-- public/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve User Data</title>
+</head>
+<body>
+    <h2>Retrieve User Data</h2>
+    <label for="usernameInput">Username:</label>
+    <input type="text" id="usernameInput">
+    <button onclick="getUserData()">Get User Data</button>
+
+    <div id="userData"></div>
+
+    <script>
+        async function getUserData() {
+            const username = document.getElementById('usernameInput').value;
+            try {
+                const response = await fetch(`/users/${username}`);
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('userData').textContent = JSON.stringify(user, null, 2);
+                } else if (response.status === 404) {
+                    document.getElementById('userData').textContent = 'User not found';
+                } else {
+                    throw new Error('Failed to retrieve user data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('userData').textContent = 'An error occurred';
+            }
+        }
+    </script>
+</body>
+</html>

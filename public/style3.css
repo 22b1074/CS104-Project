@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-photo {
+    width: 25px; /* Adjust photo width as needed */
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.profile-details {
+    text-align: center;
+}
+
+.profile-info {
+    line-height: 1.6;
+}
+
+.profile-info p {
+    margin: 5px 0;
+}
+
+/* Add more styles as needed */

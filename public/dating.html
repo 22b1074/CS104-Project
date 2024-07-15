@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dating App</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <div class="iput-container">
+      <h2>Input Interface</h2>
+      <form id="userInterestsForm">
+        <fieldset>
+            <legend>Personal Information</legend>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="rollNumber" >IITB Roll Number:</label>
+            <input type="text" id="rollNumber" name="rollNumber" required>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+            <label for="yearOfStudy">Year of Study:</label>
+            <input type="number" id="yearOfStudy" name="yearOfStudy" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </fieldset>
+
+        <fieldset>
+            <legend>Gender</legend>
+            <label class="input-radio-label"><input type="radio" id="male" name="gender" value="Male" class="input-radio" required> Male</label>
+            <label class="input-radio-label"><input type="radio" id="female" name="gender" value="Female" class="input-radio" required> Female</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Interests</legend>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Technology" class="input-checkbox"> Technology</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Art" class="input-checkbox"> Art</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Literature" class="input-checkbox"> Literature</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Sports" class="input-checkbox"> Sports</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Fashion" class="input-checkbox"> Fashion</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Music" class="input-checkbox"> Music</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Movies" class="input-checkbox"> Movies</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="interests" value="Traveling" class="input-checkbox"> Traveling</label>
+        </fieldset>
+        <fieldset>
+            <legend>Hobbies</legend>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Coding" class="input-checkbox"> Coding</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Painting" class="input-checkbox"> Painting</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Gardening" class="input-checkbox"> Gardening</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Photography" class="input-checkbox"> Photography</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Reading" class="input-checkbox"> Reading</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Cooking" class="input-checkbox"> Cooking</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Playing musical instruments" class="input-checkbox"> Playing musical instruments</label>
+            <label class="input-checkbox-label"><input type="checkbox" name="hobbies" value="Watching YouTube/Instagram" class="input-checkbox"> Watching YouTube/Instagram</label>
+        </fieldset>
+        <div class="button-container">
+        <button type="button" id="findMatchButton">Find Match</button>   
+        <button type="button" onclick="window.location.href='scroll_or_swipe.html'">Scroll Through Profiles</button>
+        <button type="button" onclick="window.location.href='login.html'">Logout</button>
+      </form>
+
+    <script>
+        document.getElementById('findMatchButton').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const rollNumber = document.getElementById('rollNumber').value;
+            const age = document.getElementById('age').value;
+            const yearOfStudy = document.getElementById('yearOfStudy').value;
+            const email = document.getElementById('email').value;
+            const selectedGender = document.querySelector('input[name="gender"]:checked').value;
+            const selectedInterests = Array.from(document.querySelectorAll('input[name="interests"]:checked')).map(cb => cb.value);
+            const selectedHobbies = Array.from(document.querySelectorAll('input[name="hobbies"]:checked')).map(cb => cb.value);
+
+            // Store the user details in localStorage
+            const userDetails = {
+                name,
+                rollNumber,
+                age,
+                yearOfStudy,
+                email,
+                gender: selectedGender,
+                interests: selectedInterests,
+                hobbies: selectedHobbies
+            };
+
+            localStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+            // Redirect to femalematch.html if the user's gender is Male
+            if (selectedGender === 'Male') {
+                window.location.href = 'female_match.html';
+            } else if (selectedGender === 'Female'){
+                window.location.href = 'male_match.html';
+            } else {
+                alert('Please Select a Gender');
+            }
+        });
+    </script>
+    
+    
+</body>
+</html>
